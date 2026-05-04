@@ -10,9 +10,9 @@ mod tests {
     #[test]
     fn parse_card_json() {
         let cc: raw::CharacterCard = serde_json::from_str(CARD_JSON).unwrap();
-        
+
         let bundle: bundle::Bundle = cc.try_into().unwrap();
-        
+
         println!("{:?}", bundle);
     }
 }
