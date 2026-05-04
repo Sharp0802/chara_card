@@ -22,7 +22,7 @@
 This project relies on the following cool open-source crates:
 
 - [serde-rs/serde](https://github.com/serde-rs/serde) & [serde-rs/json](https://github.com/serde-rs/json)
-  - **License**: Apache 2.0
+  - **License**: MIT or Apache-2.0
   - **Copyright**: (c) 2015 Serde Contributors
   - **Note**: Used to handle serialization and deserialization.
 
