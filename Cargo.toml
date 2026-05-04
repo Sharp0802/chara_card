@@ -8,6 +8,8 @@ repository = "https://github.com/Sharp0802/chara_card.git"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
+isolang = { version = "2.4.0", features = ["serde"] }
+jiff = { version = "0.2.24", features = ["serde"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-jiff = { version = "0.2.24", features = ["serde"] }
+thiserror = "2.0.18"
