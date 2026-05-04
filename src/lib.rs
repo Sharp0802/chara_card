@@ -4,14 +4,14 @@ mod v3;
 mod option;
 
 use serde::{Deserialize, Serialize};
-use serde_json::Value;
+use serde_json::{Map, Value};
 use crate::option::StrictOption;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(untagged)]
 pub enum CharacterCard {
+    Nested(NestedCharacterCard),
     Flat(v1::CharacterCardData),
-    Nested(NestedCharacterCard)
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -40,7 +40,9 @@ pub struct Lorebook {
     pub scan_depth: Option<u32>,
     pub token_budget: Option<u32>,
     pub recursive_scanning: Option<bool>,
-    pub extensions: Value,
+
+    #[serde(default)]
+    pub extensions: Map<String, Value>,
     pub entries: Vec<LorebookEntry>,
 }
 

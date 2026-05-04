@@ -26,8 +26,9 @@ impl<'de, T: Deserialize<'de>> Deserialize<'de> for StrictOption<T> {
             }
         }
 
-        T::deserialize(v)
-            .map(|val| StrictOption(Some(val)))
-            .map_err(serde::de::Error::custom)
+        match T::deserialize(v) {
+            Ok(val) => Ok(StrictOption(Some(val))),
+            Err(_) => Ok(StrictOption(None)),
+        }
     }
 }

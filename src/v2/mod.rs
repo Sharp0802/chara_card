@@ -21,6 +21,8 @@ pub struct Version2_0 {
     pub tags: Vec<String>,
     pub creator: String,
     pub character_version: String,
+
+    #[serde(default)]
     pub extensions: Map<String, Value>,
 }
 
@@ -28,16 +30,18 @@ pub struct Version2_0 {
 pub struct LorebookEntry {
     pub keys: Vec<String>,
     pub content: String,
-    pub extensions: Value,
+
+    #[serde(default)]
+    pub extensions: Map<String, Value>,
     pub enabled: bool,
     pub insertion_order: i32,
     pub case_sensitive: Option<bool>,
-
     pub name: Option<String>,
     pub priority: Option<i32>,
     pub id: Option<EntryId>,
     pub comment: Option<String>,
     pub selective: Option<bool>,
     pub secondary_keys: Option<Vec<String>>,
+    pub constant: Option<bool>,
     pub position: Option<String>, // e.g., "before_char", "after_char"
 }
