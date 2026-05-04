@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use isolang::Language;
 use jiff::Timestamp;
 use serde::{Deserialize, Serialize};
 
@@ -6,7 +7,7 @@ use serde::{Deserialize, Serialize};
 pub struct CharacterCardData {
     pub assets: Option<Vec<Asset>>,
     pub nickname: Option<String>,
-    pub creator_notes_multilingual: Option<HashMap<String, String>>,
+    pub creator_notes_multilingual: Option<HashMap<Language, String>>,
     pub source: Option<Vec<String>>,
 
     pub group_only_greetings: Vec<String>,

@@ -1,11 +1,13 @@
+mod option;
+
+pub mod v1;
+pub mod v2;
+pub mod v3;
+
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
-use option::StrictOption;
 
-mod v1;
-mod v2;
-mod v3;
-mod option;
+pub use crate::raw::option::StrictOption;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(untagged)]
@@ -18,7 +20,7 @@ pub enum CharacterCard {
 pub struct NestedCharacterCard {
     pub spec: String,
     pub spec_version: String,
-    pub data: Option<CharacterCardData>,
+    pub data: CharacterCardData,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -27,7 +29,7 @@ pub struct CharacterCardData {
     pub v1: v1::CharacterCardData,
 
     #[serde(flatten)]
-    pub v2: v2::CharacterCardData,
+    pub v2: StrictOption<v2::CharacterCardData>,
 
     #[serde(flatten)]
     pub v3: StrictOption<v3::CharacterCardData>,

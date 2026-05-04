@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
-use crate::model::option::StrictOption;
+use crate::raw::option::StrictOption;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CharacterCardData {
@@ -9,7 +9,7 @@ pub struct CharacterCardData {
     pub post_history_instructions: String,
     pub alternate_greetings: Vec<String>,
 
-    pub character_book: Option<crate::model::Lorebook>,
+    pub character_book: Option<crate::raw::Lorebook>,
 
     #[serde(flatten)]
     pub version2_0: StrictOption<Version2_0>,
@@ -37,7 +37,7 @@ pub struct LorebookEntry {
     pub case_sensitive: Option<bool>,
     pub name: Option<String>,
     pub priority: Option<i32>,
-    pub id: Option<crate::model::EntryId>,
+    pub id: Option<crate::raw::EntryId>,
     pub comment: Option<String>,
     pub selective: Option<bool>,
     pub secondary_keys: Option<Vec<String>>,

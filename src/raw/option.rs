@@ -22,13 +22,33 @@ impl<'de, T: Deserialize<'de>> Deserialize<'de> for StrictOption<T> {
 
         if let Value::Object(ref map) = v {
             if map.is_empty() {
-                return Ok(StrictOption(None));
+                return Ok(Self(None));
             }
         }
 
         match T::deserialize(v) {
-            Ok(val) => Ok(StrictOption(Some(val))),
-            Err(_) => Ok(StrictOption(None)),
+            Ok(val) => Ok(Self(Some(val))),
+            Err(_) => Ok(Self(None)),
         }
+    }
+}
+
+impl<T> StrictOption<T> {
+    // NOTE: Not using `Into` is intended.
+    //       Into<Option<T>> is not inferred from `let Option(_) = strict_option.into()`
+    pub fn into(self) -> Option<T> {
+        self.0
+    }
+}
+
+impl<T> AsRef<Option<T>> for StrictOption<T> {
+    fn as_ref(&self) -> &Option<T> {
+        &self.0
+    }
+}
+
+impl<T> From<Option<T>> for StrictOption<T> {
+    fn from(v: Option<T>) -> Self {
+        Self(v)
     }
 }
