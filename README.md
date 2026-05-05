@@ -20,8 +20,8 @@ the **same format everywhere with same behaviour**.
 - [x] Content parsing
   - [x] Decorator parser
   - [x] Curly Braced Syntaxes (CBS) parser
-- [ ] Non-standard field compatibility
-  - [ ] RisuAI (*testing...*)
+- [x] Non-standard field compatibility
+  - [x] RisuAI (*testing...*)
 
 **Evaluation**:
 
@@ -43,6 +43,8 @@ the **same format everywhere with same behaviour**.
 
 Add `chara_card` to your dependencies in `Cargo.toml`.
 
+**Parse `card.json`**:
+
 ```rust
 use chara_card::raw::CharacterCard;
 
@@ -51,6 +53,18 @@ fn parse_card_json(card_json: &str) {
     let parsed: CharacterCard = serde_json::from_str(card_json).unwrap();
     
     println!("{:#?}", parsed);
+}
+```
+
+**Extract `some.charx`**:
+
+```rust
+use chara_card::charx::CharX;
+
+fn parse_charx(bytes: &[u8]) {
+    // Extract from archived bytes (.charx)
+    let reader = Cursor::new(bytes);
+    let _charx = CharX::from(reader).unwrap();
 }
 ```
 
