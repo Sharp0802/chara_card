@@ -6,7 +6,6 @@ use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CharacterCardData {
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     #[serde(default)]
     assets: Vec<Asset>,
 
@@ -16,7 +15,6 @@ pub struct CharacterCardData {
     #[serde(default)]
     creator_notes_multilingual: HashMap<Language, String>,
 
-    #[serde(skip_serializing_if = "Vec::is_empty")]
     #[serde(default)]
     source: Vec<String>,
 
