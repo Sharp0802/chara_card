@@ -1,13 +1,10 @@
 use crate::raw::Version;
 use thiserror::Error;
-use uriparse::URIError;
 
 #[derive(Debug, Error)]
 pub enum Error {
     #[error("version string is malformed")]
     MalformedVersion,
-    #[error("URI string is malformed ({0})")]
-    MalformedURI(#[from] URIError),
     #[error("unsupported version ({0})")]
     UnsupportedVersion(Version),
     #[error("invalid version ({1}) for specification ({0})")]

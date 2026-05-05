@@ -1,10 +1,10 @@
 use serde::{Deserialize, Serialize};
-use uriparse::URI;
+use url::Url;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Asset {
     r#type: String,
-    uri: URI<'static>,
+    uri: Url,
     name: String,
     ext: String,
 }
