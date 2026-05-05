@@ -1,10 +1,10 @@
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt::Display;
 use std::str::FromStr;
-use serde::{Deserialize, Serialize};
 
-use crate::bundle::Error;
+use crate::Error;
 
-#[derive(Serialize, Deserialize, Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
+#[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct Version {
     pub major: u8,
     pub minor: u8,
@@ -48,5 +48,24 @@ impl FromStr for Version {
 impl Display for Version {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}.{}", self.major, self.minor)
+    }
+}
+
+impl Serialize for Version {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+
+impl<'de> Deserialize<'de> for Version {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s = String::deserialize(deserializer)?;
+        Self::from_str(&s).map_err(serde::de::Error::custom)
     }
 }
