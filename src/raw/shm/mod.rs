@@ -1,6 +1,7 @@
 mod version_specific;
 
 use crate::raw::{v1, v2, v3, Version};
+use crate::Error;
 use serdev::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -11,10 +12,51 @@ pub enum CharacterCard {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(validate = "Self::validate")]
 pub struct NestedCharacterCard {
     pub spec: String,
     pub spec_version: Version,
     pub data: CharacterCardData,
+}
+
+impl NestedCharacterCard {
+    fn validate(&self) -> Result<(), Error> {
+        let Some(spec) = self.spec_version.name() else {
+            return Err(Error::UnsupportedVersion(self.spec_version));
+        };
+
+        if self.spec != spec {
+            return Err(Error::UnsupportedSpec(self.spec.clone()));
+        }
+
+        if self.spec_version < Version::V2 {
+            return Ok(())
+        }
+
+        let Some(v2) = &self.data.v2 else {
+            return Err(Error::MissingFeature(Version::V2, "Data".into()));
+        };
+
+        if self.spec_version < Version::V3 {
+            return Ok(())
+        }
+
+        if self.data.v3.is_none() {
+            return Err(Error::MissingFeature(Version::V3, "Data".into()));
+        }
+
+        if let Some(book) = &v2.character_book {
+            for entry in &book.entries {
+                if entry.v3.is_some() {
+                    continue;
+                }
+
+                return Err(Error::MissingFeature(Version::V3, "LorebookEntry".into()));
+            }
+        }
+
+        Ok(())
+    }
 }
 
 impl From<CharacterCard> for NestedCharacterCard {
