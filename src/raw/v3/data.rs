@@ -35,8 +35,8 @@ pub struct CharacterCardData {
 // milliseconds for creation date...
 pub mod flexible_timestamp {
     use super::*;
-    use serde::{Deserializer, Serializer};
     use serde::de::Error;
+    use serde::{Deserializer, Serializer};
 
     pub fn serialize<S>(date: &Option<Timestamp>, serializer: S) -> Result<S::Ok, S::Error>
     where

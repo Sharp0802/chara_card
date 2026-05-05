@@ -16,7 +16,7 @@ impl Decorator {
             fallbacks: Vec::new(),
         }
     }
-    
+
     pub fn kind(&self) -> &DecoratorKind {
         &self.kind
     }
@@ -25,7 +25,12 @@ impl Decorator {
         DecoratorDisplay::new(base, self)
     }
 
-    pub(crate) fn fmt_with_depth(&self, text: &str, f: &mut Formatter<'_>, depth: usize) -> std::fmt::Result {
+    pub(crate) fn fmt_with_depth(
+        &self,
+        text: &str,
+        f: &mut Formatter<'_>,
+        depth: usize,
+    ) -> std::fmt::Result {
         for _ in 0..(depth + 2) {
             f.write_char('@')?;
         }

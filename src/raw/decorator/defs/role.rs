@@ -1,6 +1,6 @@
+use crate::raw::decorator::Error;
 use std::fmt::{Display, Formatter};
 use std::str::FromStr;
-use crate::raw::decorator::Error;
 
 #[derive(Debug, Clone)]
 pub enum Role {

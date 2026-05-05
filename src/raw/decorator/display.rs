@@ -1,5 +1,5 @@
-use std::fmt::{Display, Formatter};
 use crate::raw::decorator::Decorator;
+use std::fmt::{Display, Formatter};
 
 pub struct DecoratorDisplay<'a> {
     base: &'a str,
@@ -7,7 +7,7 @@ pub struct DecoratorDisplay<'a> {
 }
 
 impl<'a> DecoratorDisplay<'a> {
-    pub fn new(base: &'a str, decorator: &'a Decorator, ) -> Self {
+    pub fn new(base: &'a str, decorator: &'a Decorator) -> Self {
         Self { base, decorator }
     }
 }

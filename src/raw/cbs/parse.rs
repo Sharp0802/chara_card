@@ -215,7 +215,7 @@ fn optimize_nodes(nodes: &mut Vec<Node>) {
 pub fn parse<'a>(content: &'a str, global_offset: usize) -> Result<Vec<Node>, String> {
     let parser = CbsParser {
         base: content,
-        global_offset
+        global_offset,
     };
 
     let mut root_parser = |i: &mut &'a str| parser.parse_nodes(Context::Root, i);
@@ -225,8 +225,6 @@ pub fn parse<'a>(content: &'a str, global_offset: usize) -> Result<Vec<Node>, St
             optimize_nodes(&mut nodes);
             Ok(nodes)
         }
-        Err(e) => {
-            Err(format!("Parse error:\n{}", e))
-        }
+        Err(e) => Err(format!("Parse error:\n{}", e)),
     }
 }

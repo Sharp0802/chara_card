@@ -1,5 +1,5 @@
-use crate::raw::decorator::{extract, Error, Role};
 use crate::raw::decorator::DecoratorKind;
+use crate::raw::decorator::{extract, Error, Role};
 
 #[test]
 fn test_no_decorators() {
@@ -8,7 +8,10 @@ fn test_no_decorators() {
 
     assert!(decorators.is_empty());
     assert_eq!(content_range, 0..text.len());
-    assert_eq!(&text[content_range], "Just some standard text\nWithout any decorators.");
+    assert_eq!(
+        &text[content_range],
+        "Just some standard text\nWithout any decorators."
+    );
 }
 
 #[test]
@@ -17,7 +20,10 @@ fn test_single_decorator() {
     let (content_range, decorators) = extract(text).unwrap();
 
     assert_eq!(decorators.len(), 1);
-    assert!(matches!(decorators[0].kind(), DecoratorKind::Role { role: Role::User }));
+    assert!(matches!(
+        decorators[0].kind(),
+        DecoratorKind::Role { role: Role::User }
+    ));
 
     assert_eq!(&text[content_range], "The actual content.");
 }
@@ -29,8 +35,14 @@ fn test_multiple_decorators() {
 
     assert_eq!(decorators.len(), 2);
 
-    assert!(matches!(decorators[0].kind(), DecoratorKind::Role { role: Role::System }));
-    assert!(matches!(decorators[1].kind(), DecoratorKind::ActivateOnlyAfter { count: 5 }));
+    assert!(matches!(
+        decorators[0].kind(),
+        DecoratorKind::Role { role: Role::System }
+    ));
+    assert!(matches!(
+        decorators[1].kind(),
+        DecoratorKind::ActivateOnlyAfter { count: 5 }
+    ));
 
     assert_eq!(&text[content_range], "Content starts here.");
 }
@@ -47,15 +59,26 @@ fn test_fallback_depths() {
     assert_eq!(&text[content_range], "Content");
 
     let root = &decorators[0];
-    assert!(matches!(root.kind(), DecoratorKind::Role { role: Role::Assistant }));
+    assert!(matches!(
+        root.kind(),
+        DecoratorKind::Role {
+            role: Role::Assistant
+        }
+    ));
     assert_eq!(root.fallbacks.len(), 1);
 
     let fallback_1 = &root.fallbacks[0];
-    assert!(matches!(fallback_1.kind(), DecoratorKind::Depth { index: 2 }));
+    assert!(matches!(
+        fallback_1.kind(),
+        DecoratorKind::Depth { index: 2 }
+    ));
     assert_eq!(fallback_1.fallbacks.len(), 1);
 
     let fallback_2 = &fallback_1.fallbacks[0];
-    assert!(matches!(fallback_2.kind(), DecoratorKind::InstructDepth { token_index: 1 }));
+    assert!(matches!(
+        fallback_2.kind(),
+        DecoratorKind::InstructDepth { token_index: 1 }
+    ));
     assert!(fallback_2.fallbacks.is_empty());
 }
 
