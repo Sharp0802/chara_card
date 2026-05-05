@@ -38,9 +38,6 @@ the **same format everywhere with same behaviour**.
 
 ## Usage
 
-> [!WARNING]
-> Work in Progress
-
 Add `chara_card` to your dependencies in `Cargo.toml`.
 
 **Parse `card.json`**:
@@ -57,6 +54,9 @@ fn parse_card_json(card_json: &str) {
 ```
 
 **Extract `some.charx`**:
+
+> [!WARNING]
+> Currently, `charx` module is unstable and API may be changed in future.
 
 ```rust
 use chara_card::charx::CharX;
