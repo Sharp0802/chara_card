@@ -1,6 +1,6 @@
 # `chara_card`
 
-`chara_card` provides thick abstraction layer on
+`chara_card` provides thick (not yet...) abstraction layer on
 character card formats and `.charx` in Rust.
 
 Its primary goal is to help programs to run
@@ -26,6 +26,11 @@ the **same format everywhere with same behaviour**.
   - [ ] CBS evaluator
 - [ ] Non-standard extension compatibility
   - [ ] RisuAI
+
+**Packaging**:
+
+- [x] Extracting from `.charx`
+- [ ] Packaging to `.charx`
 
 ## Usage
 
