@@ -12,9 +12,9 @@ pub enum CharacterCard {
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct NestedCharacterCard {
-    spec: String,
-    spec_version: Version,
-    data: CharacterCardData,
+    pub spec: String,
+    pub spec_version: Version,
+    pub data: CharacterCardData,
 }
 
 impl From<CharacterCard> for NestedCharacterCard {
@@ -39,15 +39,15 @@ impl From<CharacterCard> for NestedCharacterCard {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CharacterCardData {
     #[serde(flatten)]
-    v1: v1::CharacterCardData,
+    pub v1: v1::CharacterCardData,
 
     #[serde(with = "version_specific")]
     #[serde(flatten)]
-    v2: Option<v2::CharacterCardData>,
+    pub v2: Option<v2::CharacterCardData>,
 
     #[serde(with = "version_specific")]
     #[serde(flatten)]
-    v3: Option<v3::CharacterCardData>,
+    pub v3: Option<v3::CharacterCardData>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

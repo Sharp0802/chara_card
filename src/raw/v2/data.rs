@@ -5,13 +5,13 @@ use crate::raw::v2::lorebook::Lorebook;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CharacterCardData {
-    tags: Vec<String>,
-    creator: String,
-    character_version: String,
-    system_prompt: String,
-    post_history_instructions: String,
-    alternate_greetings: Vec<String>,
-    extensions: Extensions,
-    creator_notes: String,
-    character_book: Option<Lorebook>,
+    pub tags: Vec<String>,
+    pub creator: String,
+    pub character_version: String,
+    pub system_prompt: String,
+    pub post_history_instructions: String,
+    pub alternate_greetings: Vec<String>,
+    pub extensions: Extensions,
+    pub creator_notes: String,
+    pub character_book: Option<Lorebook>,
 }

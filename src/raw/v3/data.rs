@@ -7,24 +7,24 @@ use std::collections::HashMap;
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CharacterCardData {
     #[serde(default)]
-    assets: Vec<Asset>,
+    pub assets: Vec<Asset>,
 
-    nickname: Option<String>,
+    pub nickname: Option<String>,
 
     #[serde(skip_serializing_if = "HashMap::is_empty")]
     #[serde(default)]
-    creator_notes_multilingual: HashMap<Language, String>,
+    pub creator_notes_multilingual: HashMap<Language, String>,
 
     #[serde(default)]
-    source: Vec<String>,
+    pub source: Vec<String>,
 
-    group_only_greetings: Vec<String>,
-
-    #[serde(with = "flexible_timestamp")]
-    creation_date: Option<Timestamp>,
+    pub group_only_greetings: Vec<String>,
 
     #[serde(with = "flexible_timestamp")]
-    modification_date: Option<Timestamp>,
+    pub creation_date: Option<Timestamp>,
+
+    #[serde(with = "flexible_timestamp")]
+    pub modification_date: Option<Timestamp>,
 }
 
 // I don't know why this is required!!!
