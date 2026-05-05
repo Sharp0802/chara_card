@@ -41,10 +41,11 @@ impl CharX {
 
                         if let Some(host) = asset.uri.host_str() {
                             path.push_str(host);
-                            path.push('/');
                         }
 
                         path.push_str(asset.uri.path());
+
+                        let path = urlencoding::decode(&path)?.to_string();
 
                         let file = match archive.by_name(&path) {
                             Ok(file) => file,

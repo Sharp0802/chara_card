@@ -1,3 +1,4 @@
+use std::string::FromUtf8Error;
 use thiserror::Error;
 use zip::result::ZipError;
 
@@ -14,4 +15,7 @@ pub enum Error {
 
     #[error("card.json: {0}")]
     InvalidCard(#[from] serde_json::error::Error),
+
+    #[error("codepage: {0}")]
+    Codepage(#[from] FromUtf8Error)
 }
