@@ -36,6 +36,7 @@ pub struct CharacterCardData {
 pub mod flexible_timestamp {
     use super::*;
     use serde::{Deserializer, Serializer};
+    use serde::de::Error;
 
     pub fn serialize<S>(date: &Option<Timestamp>, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -60,7 +61,7 @@ pub mod flexible_timestamp {
                 } else {
                     Timestamp::from_second(v)
                 }
-                .map_err(serde::de::Error::custom)?;
+                .map_err(D::Error::custom)?;
                 Ok(Some(ts))
             }
             None => Ok(None),

@@ -1,12 +1,12 @@
-use std::borrow::Cow;
-use std::ops::Range;
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use crate::raw::cbs;
 use crate::raw::cbs::Node;
 use crate::raw::decorator;
 use crate::raw::decorator::Decorator;
-use thiserror::Error;
 use crate::raw::resolve::Resolve;
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use std::borrow::Cow;
+use std::ops::Range;
+use thiserror::Error;
 
 #[derive(Debug, Clone)]
 pub struct Content {
@@ -65,7 +65,7 @@ impl TryFrom<String> for Content {
 impl Serialize for Content {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
-        S: Serializer
+        S: Serializer,
     {
         serializer.serialize_str(&self.as_ref())
     }
@@ -74,9 +74,11 @@ impl Serialize for Content {
 impl<'de> Deserialize<'de> for Content {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
-        D: Deserializer<'de>
+        D: Deserializer<'de>,
     {
+        use serde::de::Error;
+
         let string = String::deserialize(deserializer)?;
-        Self::try_from(string).map_err(serde::de::Error::custom)
+        Self::try_from(string).map_err(D::Error::custom)
     }
 }

@@ -65,7 +65,9 @@ impl<'de> Deserialize<'de> for Version {
     where
         D: Deserializer<'de>,
     {
+        use serde::de::Error;
+        
         let s = String::deserialize(deserializer)?;
-        Self::from_str(&s).map_err(serde::de::Error::custom)
+        Self::from_str(&s).map_err(D::Error::custom)
     }
 }
