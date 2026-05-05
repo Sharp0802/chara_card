@@ -1,5 +1,5 @@
+use crate::raw::{decorator, Version};
 use thiserror::Error;
-use crate::raw::Version;
 
 #[derive(Debug, Error)]
 pub enum Error {
@@ -17,4 +17,10 @@ pub enum Error {
 
     #[error("asset name '{0}' is duplicated")]
     AssetNameConflict(String),
+
+    #[error(transparent)]
+    Decorator(#[from] decorator::Error),
+
+    #[error("{0}")]
+    CBS(String),
 }

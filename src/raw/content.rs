@@ -1,27 +1,17 @@
-use crate::raw::cbs;
 use crate::raw::cbs::Node;
 use crate::raw::decorator;
 use crate::raw::decorator::Decorator;
 use crate::raw::resolve::Resolve;
+use crate::raw::{cbs, Error};
 use serdev::{Deserialize, Deserializer, Serialize, Serializer};
 use std::borrow::Cow;
 use std::ops::Range;
-use thiserror::Error;
 
 #[derive(Debug, Clone)]
 pub struct Content {
     content: String,
     decorators: Vec<Decorator>,
     parts: Vec<Node>,
-}
-
-#[derive(Debug, Error)]
-pub enum Error {
-    #[error(transparent)]
-    Decorator(#[from] decorator::Error),
-
-    #[error("{0}")]
-    CBS(String),
 }
 
 impl Content {

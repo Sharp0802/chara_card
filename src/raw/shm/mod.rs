@@ -1,7 +1,7 @@
 mod version_specific;
 
+use crate::raw::Error;
 use crate::raw::{v1, v2, v3, Version};
-use crate::Error;
 use serdev::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -9,6 +9,25 @@ use serdev::{Deserialize, Serialize};
 pub enum CharacterCard {
     Flat(v1::CharacterCardData),
     Nested(NestedCharacterCard),
+}
+
+impl CharacterCard {
+    pub fn to_nested(self) -> NestedCharacterCard {
+        let flat = match self {
+            CharacterCard::Flat(flat) => flat,
+            CharacterCard::Nested(nested) => return nested,
+        };
+
+        NestedCharacterCard {
+            spec: Version::V1.name().unwrap().into(),
+            spec_version: Version::V1,
+            data: CharacterCardData {
+                v1: flat,
+                v2: None,
+                v3: None,
+            },
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
