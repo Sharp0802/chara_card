@@ -30,7 +30,7 @@ impl NestedCharacterCard {
         }
 
         if self.spec_version < Version::V2 {
-            return Ok(())
+            return Ok(());
         }
 
         let Some(v2) = &self.data.v2 else {
@@ -38,7 +38,7 @@ impl NestedCharacterCard {
         };
 
         if self.spec_version < Version::V3 {
-            return Ok(())
+            return Ok(());
         }
 
         if self.data.v3.is_none() {
