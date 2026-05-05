@@ -14,4 +14,7 @@ pub enum Error {
 
     #[error("feature ('{1}') to satisfy version (>= '{0}') requirement is missing")]
     MissingFeature(Version, String),
+
+    #[error("asset name '{0}' is duplicated")]
+    AssetNameConflict(String),
 }

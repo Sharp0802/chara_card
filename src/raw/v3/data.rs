@@ -1,10 +1,12 @@
 use crate::raw::v3::asset::Asset;
+use crate::Error;
 use isolang::Language;
 use jiff::Timestamp;
 use serdev::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(validate = "Self::validate")]
 pub struct CharacterCardData {
     #[serde(default)]
     pub assets: Vec<Asset>,
@@ -25,6 +27,19 @@ pub struct CharacterCardData {
 
     #[serde(with = "flexible_timestamp")]
     pub modification_date: Option<Timestamp>,
+}
+
+impl CharacterCardData {
+    fn validate(&self) -> Result<(), Error> {
+        let mut set = HashSet::with_capacity(self.assets.len());
+        for name in self.assets.iter().map(|asset| asset.name.as_str()) {
+            if !set.insert(name) {
+                return Err(Error::AssetNameConflict(name.to_owned()));
+            }
+        }
+
+        Ok(())
+    }
 }
 
 // I don't know why this is required!!!
