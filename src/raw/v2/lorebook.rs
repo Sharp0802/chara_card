@@ -1,4 +1,4 @@
-use crate::raw::shm;
+use crate::raw::{shm, Content};
 use crate::raw::v2::extension::Extensions;
 use serde::{Deserialize, Serialize};
 
@@ -30,7 +30,7 @@ pub enum Id {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct LorebookEntry {
     keys: Vec<String>,
-    content: String,
+    content: Content,
     extensions: Extensions,
     enabled: bool,
     insertion_order: u64,
