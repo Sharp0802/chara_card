@@ -1,6 +1,6 @@
 use crate::raw::cbs::Node;
 use winnow::combinator::alt;
-use winnow::token::{literal, take, take_while};
+use winnow::token::{literal, take_while};
 use winnow::Parser;
 
 type ParseResult<T> = Result<T, winnow::error::ErrMode<winnow::error::ContextError>>;
@@ -171,7 +171,9 @@ impl<'a> CbsParser<'a> {
             ));
         }
 
-        let text_slice = take(bytes_consumed).parse_next(input)?;
+        let text_slice = &input[..bytes_consumed];
+        *input = &input[bytes_consumed..];
+
         let start = self.offset(text_slice);
 
         Ok(Node::Text(start..(start + text_slice.len())))
