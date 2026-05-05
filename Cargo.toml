@@ -4,6 +4,7 @@ version = "0.2.0"
 edition = "2024"
 
 description = "A library to deal with character card formats and `.charx` in Rust."
+keywords = ["character-card", "charx", "llm", "schema"]
 repository = "https://github.com/Sharp0802/chara_card.git"
 license = "Apache-2.0"
 
