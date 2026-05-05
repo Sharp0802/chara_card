@@ -1,4 +1,8 @@
-# `chara_card`
+# `chara_card` &emsp; [![Version]][crates.io] [![License]][crates.io]
+
+[Version]: https://img.shields.io/crates/v/chara_card.svg
+[License]: https://img.shields.io/crates/l/chara_card.svg
+[crates.io]: https://crates.io/crates/chara_card
 
 `chara_card` provides thick (not yet...) abstraction layer on
 character card formats and `.charx` in Rust.
