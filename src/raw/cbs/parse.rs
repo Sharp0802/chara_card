@@ -17,11 +17,13 @@ enum Context {
 #[derive(Clone, Copy)]
 struct CbsParser<'a> {
     base: &'a str,
+    global_offset: usize,
 }
 
 impl<'a> CbsParser<'a> {
     fn offset(&self, slice: &str) -> usize {
-        slice.as_ptr() as usize - self.base.as_ptr() as usize
+        let local_offset = slice.as_ptr() as usize - self.base.as_ptr() as usize;
+        local_offset + self.global_offset
     }
 
     // Instead of returning a closure, we pass `input` directly into the method
@@ -208,8 +210,12 @@ fn optimize_nodes(nodes: &mut Vec<Node>) {
     }
 }
 
-pub fn parse(content: &str) -> Result<Vec<Node>, String> {
-    let parser = CbsParser { base: content };
+pub fn parse(content: &str, global_offset: usize) -> Result<Vec<Node>, String> {
+    let parser = CbsParser {
+        base: content,
+        global_offset
+    };
+
     let mut input = content;
 
     match parser.parse_nodes(Context::Root, &mut input) {
