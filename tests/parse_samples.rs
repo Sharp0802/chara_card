@@ -1,8 +1,14 @@
 use assert_json_diff::assert_json_eq;
+use chara_card::charx::CharX;
+use chara_card::raw::CharacterCard;
 use jiff::Timestamp;
 use serde_json::Value;
+use std::io::Cursor;
 use url::Url;
-use chara_card::raw::CharacterCard;
+
+const CHARX: [&[u8]; 1] = [
+    include_bytes!("samples/test.charx")
+];
 
 const CARDS: [&str; 2] = [
     include_str!("samples/sample1/card.json"),
@@ -11,6 +17,11 @@ const CARDS: [&str; 2] = [
 
 #[test]
 fn parse_samples() {
+    for charx in CHARX {
+        let reader = Cursor::new(charx);
+        let _charx = CharX::from(reader).unwrap();
+    }
+
     for card in CARDS {
         let mut value: Value = serde_json::from_str(card).unwrap();
 
@@ -20,7 +31,7 @@ fn parse_samples() {
             let ts = Timestamp::from_millisecond(ts).unwrap();
             *creation_date = Value::Number(ts.as_second().into())
         }
-        
+
         // NOTE: It seems RisuAI doesn't encode URIs
         if let Some(assets) = value.get_mut("data").and_then(|v| v.get_mut("assets")) {
             for asset in assets.as_array_mut().unwrap() {
