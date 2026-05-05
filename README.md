@@ -4,6 +4,9 @@
 [License]: https://img.shields.io/crates/l/chara_card.svg
 [crates.io]: https://crates.io/crates/chara_card
 
+- [**한국어**](README.kr.md)
+- [**English**](README.md)
+
 `chara_card` provides thick (not yet...) abstraction layer on
 character card formats and `.charx` in Rust.
 
