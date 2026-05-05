@@ -3,7 +3,7 @@ use crate::raw::cbs::Node;
 use crate::raw::decorator;
 use crate::raw::decorator::Decorator;
 use crate::raw::resolve::Resolve;
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serdev::{Deserialize, Deserializer, Serialize, Serializer};
 use std::borrow::Cow;
 use std::ops::Range;
 use thiserror::Error;
@@ -76,7 +76,7 @@ impl<'de> Deserialize<'de> for Content {
     where
         D: Deserializer<'de>,
     {
-        use serde::de::Error;
+        use serdev::de::Error;
 
         let string = String::deserialize(deserializer)?;
         Self::try_from(string).map_err(D::Error::custom)

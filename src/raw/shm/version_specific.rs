@@ -1,4 +1,4 @@
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serdev::{Deserialize, Deserializer, Serialize, Serializer};
 
 pub fn serialize<S, T: Serialize>(option: &Option<T>, serializer: S) -> Result<S::Ok, S::Error>
 where

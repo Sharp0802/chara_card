@@ -1,4 +1,4 @@
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serdev::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt::Display;
 use std::str::FromStr;
 
@@ -65,7 +65,7 @@ impl<'de> Deserialize<'de> for Version {
     where
         D: Deserializer<'de>,
     {
-        use serde::de::Error;
+        use serdev::de::Error;
 
         let s = String::deserialize(deserializer)?;
         Self::from_str(&s).map_err(D::Error::custom)

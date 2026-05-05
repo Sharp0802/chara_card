@@ -1,7 +1,7 @@
 use crate::raw::v3::asset::Asset;
 use isolang::Language;
 use jiff::Timestamp;
-use serde::{Deserialize, Serialize};
+use serdev::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -35,8 +35,8 @@ pub struct CharacterCardData {
 // milliseconds for creation date...
 pub mod flexible_timestamp {
     use super::*;
-    use serde::de::Error;
-    use serde::{Deserializer, Serializer};
+    use serdev::de::Error;
+    use serdev::{Deserializer, Serializer};
 
     pub fn serialize<S>(date: &Option<Timestamp>, serializer: S) -> Result<S::Ok, S::Error>
     where

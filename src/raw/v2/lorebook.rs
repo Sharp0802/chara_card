@@ -1,6 +1,6 @@
 use crate::raw::v2::extension::Extensions;
 use crate::raw::{shm, Content};
-use serde::{Deserialize, Serialize};
+use serdev::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Lorebook {

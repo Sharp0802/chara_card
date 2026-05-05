@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+use serdev::{Deserialize, Serialize};
 use url::Url;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

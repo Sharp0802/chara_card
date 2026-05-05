@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+use serdev::{Deserialize, Serialize};
 
 use crate::raw::v2::extension::Extensions;
 use crate::raw::v2::lorebook::Lorebook;

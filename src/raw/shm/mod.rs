@@ -1,7 +1,7 @@
 mod version_specific;
 
 use crate::raw::{v1, v2, v3, Version};
-use serde::{Deserialize, Serialize};
+use serdev::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(untagged)]

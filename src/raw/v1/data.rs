@@ -1,4 +1,4 @@
-use serde::{Deserialize, Serialize};
+use serdev::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CharacterCardData {
