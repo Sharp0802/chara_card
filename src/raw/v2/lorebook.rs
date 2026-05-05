@@ -59,4 +59,12 @@ pub struct LorebookEntry {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[serde(default)]
     secondary_keys: Vec<String>,
+
+    /// ***Non-Standard Item** (found in RisuAI)*
+    #[serde(skip_serializing_if = "Option::is_none")]
+    mode: Option<String>,
+
+    /// ***Non-Standard Item** (found in RisuAI)*
+    #[serde(skip_serializing_if = "Option::is_none")]
+    folder: Option<String>,
 }
