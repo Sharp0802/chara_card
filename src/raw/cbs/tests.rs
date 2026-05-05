@@ -3,7 +3,7 @@ use crate::raw::cbs::{parse, Node};
 #[test]
 fn test_plain_text() {
     let source = "Hello world!";
-    let nodes = parse(source).unwrap();
+    let nodes = parse(source, 0).unwrap();
 
     assert_eq!(nodes.len(), 1);
     assert_eq!(nodes[0], Node::Text(0..12));
@@ -13,7 +13,7 @@ fn test_plain_text() {
 fn test_simple_macro() {
     // "user" is at indices 2..6
     let source = "{{user}}";
-    let nodes = parse(source).unwrap();
+    let nodes = parse(source, 0).unwrap();
 
     assert_eq!(nodes.len(), 1);
     assert_eq!(
@@ -29,7 +29,7 @@ fn test_simple_macro() {
 fn test_macro_with_args() {
     // "time" is 2..6, "YYYY" is 8..12, "HH" is 14..16
     let source = "{{time::YYYY::HH}}";
-    let nodes = parse(source).unwrap();
+    let nodes = parse(source, 0).unwrap();
 
     assert_eq!(nodes.len(), 1);
     assert_eq!(
@@ -45,7 +45,7 @@ fn test_macro_with_args() {
 fn test_math_syntax() {
     // " 5+5 " is inside the math block, from index 3..8
     let source = "{{? 5+5 }}";
-    let nodes = parse(source).unwrap();
+    let nodes = parse(source, 0).unwrap();
 
     assert_eq!(nodes.len(), 1);
     assert_eq!(nodes[0], Node::Math(vec![Node::Text(3..8)]));
@@ -57,7 +57,7 @@ fn test_block_syntax() {
     // arg "1" is 6..7
     // body "Hello" is 9..14
     let source = "{{#if 1}}Hello{{/if}}";
-    let nodes = parse(source).unwrap();
+    let nodes = parse(source, 0).unwrap();
 
     assert_eq!(nodes.len(), 1);
     assert_eq!(
@@ -74,7 +74,7 @@ fn test_block_syntax() {
 fn test_block_syntax_short_close() {
     // Testing that `{{/}}` works just as well as `{{/if}}`
     let source = "{{#if 1}}Hello{{/}}";
-    let nodes = parse(source).unwrap();
+    let nodes = parse(source, 0).unwrap();
 
     assert_eq!(nodes.len(), 1);
     assert_eq!(
@@ -91,7 +91,7 @@ fn test_block_syntax_short_close() {
 fn test_nested_syntaxes() {
     // A macro inside a math block inside a text stream
     let source = "Score: {{? {{getvar::A}} + 1 }} points";
-    let nodes = parse(source).unwrap();
+    let nodes = parse(source, 0).unwrap();
 
     assert_eq!(nodes.len(), 3);
 
@@ -129,7 +129,7 @@ fn test_fallback_unclosed_brackets() {
     // The parser should treat broken syntax as pure text
     // and optimize it into a single Text node.
     let source = "Hello {{user and some other text";
-    let nodes = parse(source).unwrap();
+    let nodes = parse(source, 0).unwrap();
 
     assert_eq!(nodes.len(), 1);
     assert_eq!(nodes[0], Node::Text(0..32));
@@ -139,7 +139,7 @@ fn test_fallback_unclosed_brackets() {
 fn test_complex_array_spread() {
     // Validating the spec example: {{random::{{spread::{{array::A::B}}}}}}
     let source = "{{random::{{spread::{{array::A::B}}}}}}";
-    let nodes = parse(source).unwrap();
+    let nodes = parse(source, 0).unwrap();
 
     assert_eq!(nodes.len(), 1);
 
