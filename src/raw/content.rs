@@ -1,13 +1,15 @@
+use std::borrow::Cow;
+use std::ops::Range;
 use crate::raw::cbs;
 use crate::raw::cbs::Node;
 use crate::raw::decorator;
 use crate::raw::decorator::Decorator;
 use thiserror::Error;
+use crate::raw::resolve::Resolve;
 
 #[derive(Debug, Clone)]
 pub struct Content {
     content: String,
-    decorator_size: usize,
     decorators: Vec<Decorator>,
     parts: Vec<Node>,
 }
@@ -21,6 +23,28 @@ pub enum Error {
     CBS(String),
 }
 
+impl Content {
+    pub fn decorators(&self) -> &[Decorator] {
+        &self.decorators
+    }
+
+    pub fn parts(&self) -> &[Node] {
+        &self.parts
+    }
+}
+
+impl Resolve<Range<usize>> for Content {
+    fn resolve(&'_ self, value: Range<usize>) -> Cow<'_, str> {
+        Cow::Borrowed(&self.as_ref()[value])
+    }
+}
+
+impl AsRef<str> for Content {
+    fn as_ref(&self) -> &str {
+        &self.content
+    }
+}
+
 impl TryFrom<String> for Content {
     type Error = Error;
 
@@ -31,11 +55,8 @@ impl TryFrom<String> for Content {
 
         Ok(Self {
             content: value,
-            decorator_size: offset,
             decorators,
             parts,
         })
     }
 }
-
-
