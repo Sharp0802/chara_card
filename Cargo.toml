@@ -5,7 +5,7 @@ edition = "2024"
 
 description = "A library to deal with character card formats and `.charx` in Rust."
 repository = "https://github.com/Sharp0802/chara_card.git"
-license = "MIT OR Apache-2.0"
+license = "Apache-2.0"
 
 [dependencies]
 isolang = { version = "2.4", features = ["serde"] }
