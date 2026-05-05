@@ -17,7 +17,7 @@ fn test_single_decorator() {
     let (content_range, decorators) = extract(text).unwrap();
 
     assert_eq!(decorators.len(), 1);
-    assert!(matches!(decorators[0].kind, DecoratorKind::Role { role: Role::User }));
+    assert!(matches!(decorators[0].kind(), DecoratorKind::Role { role: Role::User }));
 
     assert_eq!(&text[content_range], "The actual content.");
 }
@@ -29,8 +29,8 @@ fn test_multiple_decorators() {
 
     assert_eq!(decorators.len(), 2);
 
-    assert!(matches!(decorators[0].kind, DecoratorKind::Role { role: Role::System }));
-    assert!(matches!(decorators[1].kind, DecoratorKind::ActivateOnlyAfter { count: 5 }));
+    assert!(matches!(decorators[0].kind(), DecoratorKind::Role { role: Role::System }));
+    assert!(matches!(decorators[1].kind(), DecoratorKind::ActivateOnlyAfter { count: 5 }));
 
     assert_eq!(&text[content_range], "Content starts here.");
 }
@@ -47,15 +47,15 @@ fn test_fallback_depths() {
     assert_eq!(&text[content_range], "Content");
 
     let root = &decorators[0];
-    assert!(matches!(root.kind, DecoratorKind::Role { role: Role::Assistant }));
+    assert!(matches!(root.kind(), DecoratorKind::Role { role: Role::Assistant }));
     assert_eq!(root.fallbacks.len(), 1);
 
     let fallback_1 = &root.fallbacks[0];
-    assert!(matches!(fallback_1.kind, DecoratorKind::Depth { index: 2 }));
+    assert!(matches!(fallback_1.kind(), DecoratorKind::Depth { index: 2 }));
     assert_eq!(fallback_1.fallbacks.len(), 1);
 
     let fallback_2 = &fallback_1.fallbacks[0];
-    assert!(matches!(fallback_2.kind, DecoratorKind::InstructDepth { token_index: 1 }));
+    assert!(matches!(fallback_2.kind(), DecoratorKind::InstructDepth { token_index: 1 }));
     assert!(fallback_2.fallbacks.is_empty());
 }
 
@@ -79,7 +79,7 @@ fn test_misc_decorator() {
     assert_eq!(decorators.len(), 1);
     assert_eq!(&text[content_range], "Content");
 
-    if let DecoratorKind::Misc { name, args } = &decorators[0].kind {
+    if let DecoratorKind::Misc { name, args } = &decorators[0].kind() {
         assert_eq!(&text[name.clone()], "unknown_decorator");
         assert_eq!(args.len(), 2);
         assert_eq!(&text[args[0].clone()], "arg1");
