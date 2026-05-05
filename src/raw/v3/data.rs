@@ -3,7 +3,7 @@ use crate::raw::Error;
 use isolang::Language;
 use jiff::Timestamp;
 use serdev::{Deserialize, Serialize};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(validate = "Self::validate")]
@@ -31,12 +31,17 @@ pub struct CharacterCardData {
 
 impl CharacterCardData {
     fn validate(&self) -> Result<(), Error> {
-        let mut set = HashSet::with_capacity(self.assets.len());
-        for name in self.assets.iter().map(|asset| asset.name.as_str()) {
-            if !set.insert(name) {
-                return Err(Error::AssetNameConflict(name.to_owned()));
-            }
-        }
+        // let mut set = HashSet::with_capacity(self.assets.len());
+        // for name in self.assets.iter().map(|asset| asset.name.as_str()) {
+        //     if !set.insert(name) {
+        //         return Err(Error::AssetNameConflict(name.to_owned()));
+        //     }
+        // }
+
+        // Non-standard again!!!
+        // Real-world data may contain duplicated asset names.
+        // (checked with artefacts from RisuAI)
+        // We bypass the strict check.
 
         Ok(())
     }
