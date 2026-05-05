@@ -1,5 +1,6 @@
 use std::borrow::Cow;
 use std::ops::Range;
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use crate::raw::cbs;
 use crate::raw::cbs::Node;
 use crate::raw::decorator;
@@ -58,5 +59,24 @@ impl TryFrom<String> for Content {
             decorators,
             parts,
         })
+    }
+}
+
+impl Serialize for Content {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer
+    {
+        serializer.serialize_str(&self.as_ref())
+    }
+}
+
+impl<'de> Deserialize<'de> for Content {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>
+    {
+        let string = String::deserialize(deserializer)?;
+        Self::try_from(string).map_err(serde::de::Error::custom)
     }
 }
