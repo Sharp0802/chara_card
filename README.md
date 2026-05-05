@@ -53,7 +53,7 @@ fn parse_card_json(card_json: &str) {
 }
 ```
 
-**Extract `some.charx`**:
+**Extract from `.charx`**:
 
 > [!WARNING]
 > Currently, `charx` module is unstable and API may be changed in future.
