@@ -7,6 +7,7 @@ use serdev::{Deserialize, Deserializer, Serialize, Serializer};
 use std::borrow::Cow;
 use std::ops::Range;
 
+/// Represents abstraction over `content` field in lorebook entry.
 #[derive(Debug, Clone)]
 pub struct Content {
     content: String,
@@ -15,10 +16,15 @@ pub struct Content {
 }
 
 impl Content {
+    /// Gets decorators attached to this content.
     pub fn decorators(&self) -> &[Decorator] {
         &self.decorators
     }
 
+    /// Gets parts of this content.
+    ///
+    /// Each part can be text or evaluatable node,
+    /// and these nodes need to be evaluated to be represented as string.
     pub fn parts(&self) -> &[Node] {
         &self.parts
     }

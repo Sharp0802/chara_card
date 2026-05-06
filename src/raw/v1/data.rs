@@ -1,15 +1,24 @@
-use crate::raw::v1::examples::Examples;
-use serdev::{Deserialize, Serialize};
+use serdev::{Deserialize, Deserializer, Serialize, Serializer};
 
+/// Represents version-1-specific features of character card data.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CharacterCardData {
+    /// Represents name of the character card.
     pub name: String,
+
+    /// Represents description of the character card.
     pub description: String,
+
+    /// Represents personality of the character.
     pub personality: String,
+
+    /// Represents main scenario of the character card.
     pub scenario: String,
+
+    /// Represents main greeting of the character card.
     pub first_mes: String,
-    pub mes_example: String,
-    pub mes_example: Examples,
+
+    /// Represents example conversations.
     #[serde(with = "examples")]
     pub mes_example: Vec<String>,
 }

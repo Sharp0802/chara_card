@@ -4,14 +4,25 @@ use crate::raw::Error;
 use crate::raw::{v1, v2, v3, Version};
 use serdev::{Deserialize, Serialize};
 
+/// Represents character card regardless of specification version.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(untagged)]
 pub enum CharacterCard {
+    /// Represents character card, version 1.
     Flat(v1::CharacterCardData),
+
+    /// Represents character card, version 2 or later.
     Nested(NestedCharacterCard),
 }
 
 impl CharacterCard {
+    /// Converts form of flat character card to nested form.
+    ///
+    /// "chara_card_v1" and "1.0" will be used for
+    /// `spec` field and `spec_version` field of
+    /// character card data.
+    ///
+    /// It has no effect for nested character card.
     pub fn to_nested(self) -> NestedCharacterCard {
         let flat = match self {
             CharacterCard::Flat(flat) => flat,
@@ -30,11 +41,23 @@ impl CharacterCard {
     }
 }
 
+/// Represents nested form of character card.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(validate = "Self::validate")]
 pub struct NestedCharacterCard {
+    /// Represents specification name of the character card.
+    ///
+    /// To be consistent with other versions,
+    /// "chara_card_v1" is used for CCv1.
     pub spec: String,
+
+    /// Represents specification version of the character card.
+    ///
+    /// To be consistent with other versions,
+    /// "1.0" is used for CCv1.
     pub spec_version: Version,
+
+    /// Represents inner data of the character card.
     pub data: CharacterCardData,
 }
 
@@ -97,31 +120,44 @@ impl From<CharacterCard> for NestedCharacterCard {
     }
 }
 
+/// Represents character card data regardless of specification version.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CharacterCardData {
+    /// Represents version-1-specific data.
     #[serde(flatten)]
     pub v1: v1::CharacterCardData,
 
+    /// Represents version-2-specific data.
+    ///
+    /// For version 2 or later, it's ensured that this field is not `None`.
     #[serde(with = "version_specific")]
     #[serde(flatten)]
     pub v2: Option<v2::CharacterCardData>,
 
+    /// Represents version-3-specific data.
+    ///
+    /// For version 3 or later, it's ensured that this field is not `None`.
     #[serde(with = "version_specific")]
     #[serde(flatten)]
     pub v3: Option<v3::CharacterCardData>,
 }
 
+/// Represents lorebook regardless of specification version.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Lorebook {
+    /// Represents version-2-specific data.
     #[serde(flatten)]
     v2: v2::Lorebook,
 }
 
+/// Represents lorebook entry regardless of specification version.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct LorebookEntry {
+    /// Represents version-2-specific data.
     #[serde(flatten)]
     v2: v2::LorebookEntry,
 
+    /// Represents version-3-specific data.
     #[serde(with = "version_specific")]
     #[serde(flatten)]
     v3: Option<v3::LorebookEntry>,

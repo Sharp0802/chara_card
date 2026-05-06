@@ -5,26 +5,92 @@ use jiff::Timestamp;
 use serdev::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+/// Represents version-3-specific features of character card data.
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(validate = "Self::validate")]
 pub struct CharacterCardData {
+    /// Represents an array of asset.
+    ///
+    /// ### Compatibility Notes
+    ///
+    /// While the specification suggests that `name` field within an `Asset`
+    /// **MAY** be used as an identifier,
+    /// some implementations (tested with *RisuAI*, at 2026-05-05)
+    /// permit duplicate names within this array.
+    ///
+    /// Consequently, the `name` field **SHOULD NOT** be treated as guaranteed unique key.
+    ///
     #[serde(default)]
     pub assets: Vec<Asset>,
 
+    /// Represents replacement of character name.
+    ///
+    /// ### Expected Behaviour
+    ///
+    /// If set, character name placeholders
+    /// (e.g., `{{char}}`, `<char>` or `<bot>`)
+    /// **SHOULD** be replaced with this value.
+    ///
+    /// ### Implementation Notes
+    ///
+    /// Even if this field is set,
+    /// `name` **SHOULD** be used as identifier of character card.
     pub nickname: Option<String>,
 
+    /// Represents multilingual creator notes.
+    ///
+    /// ### Expected Behaviour
+    ///
+    /// If this field is not empty,
+    /// `creator_notes` **SHOULD** be considered as for `en` language.
     #[serde(skip_serializing_if = "HashMap::is_empty")]
     #[serde(default)]
     pub creator_notes_multilingual: HashMap<Language, String>,
 
+    /// Represents an array of the ID or URL that points to the citations.
+    ///
+    /// ### Implementation Notes
+    ///
+    /// The specification **did not define** the exact format or semantics of the IDs.
+    ///
+    /// Therefore,
+    /// while an application **MAY** assign application-specific semantics
+    /// to these IDs within its own ecosystem,
+    ///
+    /// It **SHOULD NOT** allow users to add new non-URL sources.
+    /// Furthermore, IDs **SHOULD NOT** be relied upon for cross-application compatibility.
     #[serde(default)]
     pub source: Vec<String>,
 
+    /// Represents an array of additional greetings string only used for group chats.
+    ///
+    /// ### Implementation Notes
+    ///
+    /// The specification describes this field as **additional** greetings;
+    /// However, it's unclear whether this is intended as a supplement or
+    /// a legacy consideration for CCv1 (`first_mes`) compatibility.
+    ///
+    /// To ensure a consistent user experience,
+    /// If this field is not empty, applications **SHOULD** use it
+    /// as the exclusive source for group chat greetings,
+    /// superseding the primary greetings.
     pub group_only_greetings: Vec<String>,
 
+    /// Represents the creation timestamp.
+    ///
+    /// ### Compatibility Notes
+    ///
+    /// Although the specification defines UNIX timestamps with second-level precision,
+    /// some implementations (tested with *RisuAI*, at 2026-05-05)
+    /// may use millisecond-level precision for creation date.
+    ///
+    /// This crate **automatically normalizes** these values to the standard
+    /// second-level precision during deserialization.
+    /// When serializing, the value will always be written in standard seconds.
     #[serde(with = "flexible_timestamp")]
     pub creation_date: Option<Timestamp>,
 
+    /// Represents the modification timestamp.
     #[serde(with = "flexible_timestamp")]
     pub modification_date: Option<Timestamp>,
 }

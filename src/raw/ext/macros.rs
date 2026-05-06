@@ -1,4 +1,3 @@
-
 macro_rules! extensions {
     ($($name:ident($value:ty),)+) => {
         use serde_json::Value;
@@ -6,7 +5,7 @@ macro_rules! extensions {
         use serdev::{Deserialize, Deserializer, Serialize, Serializer};
         use serdev::ser::SerializeMap;
         use std::fmt::Formatter;
-        
+
         impl Serialize for Extensions {
             fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
             where

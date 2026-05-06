@@ -4,17 +4,34 @@ use std::str::FromStr;
 
 use crate::raw::Error;
 
+/// Represents a version identifier following the `<major>.<minor>` format.
+///
+/// Note that there is no patch number by the specification.
+///
+/// It supports full comparison operators,
+/// allowing you to easily sort versions or check for compatibility ranges.
+/// Bigger number is bigger.
 #[derive(Debug, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash)]
 pub struct Version {
+    /// The major version component.
     pub major: u8,
+    /// The minor version component.
     pub minor: u8,
 }
 
 impl Version {
+    /// Represents version of CCv1.
     pub const V1: Self = Self { major: 1, minor: 0 };
+
+    /// Represents version of CCv2.
     pub const V2: Self = Self { major: 2, minor: 0 };
+
+    /// Represents version of CCv3.
     pub const V3: Self = Self { major: 3, minor: 0 };
 
+    /// Gets name of specification corresponding to specification version.
+    ///
+    /// Note that it returns "chara_card_v1" for consistency for CCv1.
     pub fn name(&self) -> Option<&'static str> {
         match self.major {
             1 => Some("chara_card_v1"),

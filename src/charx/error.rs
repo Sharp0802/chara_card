@@ -17,5 +17,5 @@ pub enum Error {
     InvalidCard(#[from] serde_json::error::Error),
 
     #[error("codepage: {0}")]
-    Codepage(#[from] FromUtf8Error)
+    Codepage(#[from] FromUtf8Error),
 }

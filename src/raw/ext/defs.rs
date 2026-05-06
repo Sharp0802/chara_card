@@ -1,6 +1,7 @@
 use crate::raw::ext::macros::extensions;
 use std::ops::Deref;
 
+/// Represents an array of application-specific extensions.
 #[derive(Debug, Clone)]
 pub struct Extensions(Vec<Extension>);
 

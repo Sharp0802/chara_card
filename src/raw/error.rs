@@ -1,6 +1,7 @@
 use crate::raw::{decorator, Version};
 use thiserror::Error;
 
+/// Represents errors during deserialization/validation of raw types.
 #[derive(Debug, Error)]
 pub enum Error {
     #[error("version string is malformed")]
