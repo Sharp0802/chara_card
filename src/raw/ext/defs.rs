@@ -1,6 +1,6 @@
+use crate::raw::ext::impls::{DepthPrompt, PngExif, RisuAI};
 use crate::raw::ext::macros::extensions;
 use std::ops::Deref;
-use crate::raw::ext::impls::{DepthPrompt, PngExif, RisuAI};
 
 /// Represents an array of application-specific extensions.
 #[derive(Debug, Clone, Default)]

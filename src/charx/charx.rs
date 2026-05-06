@@ -1,7 +1,7 @@
 use crate::charx::asset::Asset;
 use crate::charx::source::Source;
 use crate::charx::Error;
-use crate::raw::{CharacterCard, NestedCharacterCard};
+use crate::raw::NestedCharacterCard;
 use std::collections::HashMap;
 use std::io::{Read, Seek};
 use url::Url;
@@ -50,7 +50,7 @@ pub struct CharXImport<T: Read + Seek> {
 impl<T: Read + Seek> CharXImport<T> {
     pub fn from_reader(reader: T) -> Result<Self, Error> {
         let mut archive = ZipArchive::new(reader)?;
-        
+
         let file = match archive.by_name("card.json") {
             Ok(file) => file,
             Err(ZipError::FileNotFound) => return Err(Error::NotFound("card.json".into())),

@@ -12,7 +12,7 @@ pub struct RisuAI {
 
     #[serde(skip_serializing_if = "Option::is_none")]
     pub view_screen: Option<String>,
-    
+
     #[serde(skip_serializing_if = "Option::is_none")]
     pub utility_bot: Option<bool>,
 
@@ -68,13 +68,13 @@ pub struct RisuAI {
 pub struct NewGenData {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub prompt: Option<String>,
-    
+
     #[serde(skip_serializing_if = "Option::is_none")]
     pub negative: Option<String>,
-    
+
     #[serde(skip_serializing_if = "Option::is_none")]
     pub instructions: Option<String>,
-    
+
     #[serde(skip_serializing_if = "Option::is_none")]
     pub emotion_instructions: Option<String>,
 }

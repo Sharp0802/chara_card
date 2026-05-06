@@ -44,7 +44,9 @@ impl Into<Url> for Source {
     fn into(self) -> Url {
         match self {
             Source::CCDefault => "ccdefault:".parse().unwrap(),
-            Source::Embedded(path) => format!("embeded://{}", path.to_str().unwrap()).parse().unwrap(),
+            Source::Embedded(path) => format!("embeded://{}", path.to_str().unwrap())
+                .parse()
+                .unwrap(),
             Source::File(path) => Url::from_file_path(path).unwrap(),
             Source::Misc(url) => url,
         }

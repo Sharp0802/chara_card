@@ -53,11 +53,11 @@ impl Asset {
     pub fn data(&self) -> Option<&Data> {
         self.data.as_ref()
     }
-    
+
     pub fn source(&self) -> &Source {
         &self.source
     }
-    
+
     pub fn try_from(
         source: Source,
         ext: &str,

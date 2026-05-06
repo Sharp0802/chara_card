@@ -1,6 +1,6 @@
+mod asset;
 mod charx;
 mod error;
-mod asset;
 mod source;
 
 pub use charx::*;

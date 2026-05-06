@@ -24,8 +24,8 @@ pub struct CharacterCardData {
 }
 
 pub mod examples {
-    use std::borrow::Cow;
     use super::*;
+    use std::borrow::Cow;
 
     pub fn serialize<S>(value: &Vec<String>, serializer: S) -> Result<S::Ok, S::Error>
     where
