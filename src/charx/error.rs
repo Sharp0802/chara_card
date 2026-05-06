@@ -1,3 +1,4 @@
+use std::path::PathBuf;
 use std::string::FromUtf8Error;
 use thiserror::Error;
 use zip::result::ZipError;
@@ -8,7 +9,7 @@ pub enum Error {
     Zip(#[from] ZipError),
 
     #[error("{0}: {1}")]
-    Io(String, std::io::Error),
+    Io(PathBuf, std::io::Error),
 
     #[error("{0}: not found")]
     NotFound(String),
