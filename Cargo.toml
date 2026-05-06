@@ -22,3 +22,4 @@ zip = "8.6"
 
 [dev-dependencies]
 assert-json-diff = "2.0"
+rstest = "0.26.1"
