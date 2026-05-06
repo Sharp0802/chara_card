@@ -63,12 +63,14 @@ fn parse_card_json(card_json: &str) {
 > Currently, `charx` module is unstable and API may be changed in future.
 
 ```rust
-use chara_card::charx::CharX;
+use chara_card::charx::{CharXImport, CharX};
+use std::io::Cursor;
 
 fn parse_charx(bytes: &[u8]) {
     // Extract from archived bytes (.charx)
     let reader = Cursor::new(bytes);
-    let _charx = CharX::from(reader).unwrap();
+    let import = CharXImport::from_reader(reader).unwrap();
+    let _charx = CharX::try_from(import).unwrap();
 }
 ```
 
