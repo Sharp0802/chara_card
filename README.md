@@ -71,19 +71,6 @@ fn parse_charx(bytes: &[u8]) {
 }
 ```
 
-## Clean-Room Design & Compatibility
-
-This crate aims for high compatibility with various character card implementations
-while maintaining legal and ethical boundaries.
-
-To support non-standard extensions without bound by their specific licenses or internal logic,
-We strictly adhere to **Clean-Room Design** principles:
-
-- No Source Code Inspection : We do not read or reference the source code of other applications.
-- Artefact Analysis : Compatibility is achieved solely by analysing publicly available specifications and
-  program-generated artefact (e.g., exported files).
-- Independent Implementation : All logic is implemented from scratch to ensure compatibility.
-
 ## License
 
 Licensed under [Apache License, Version 2.0](LICENSE).
