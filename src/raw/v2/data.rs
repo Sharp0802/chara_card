@@ -3,7 +3,7 @@ use crate::raw::v2::lorebook::Lorebook;
 use serdev::{Deserialize, Serialize};
 
 /// Represents version-2-specific features of character card data.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct CharacterCardData {
     /// Represents an array of string tag.
     ///

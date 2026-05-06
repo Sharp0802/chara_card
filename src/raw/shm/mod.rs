@@ -39,6 +39,29 @@ impl CharacterCard {
             },
         }
     }
+
+    /// Migrates character card to specific version.
+    ///
+    /// Downgrade can cause loss of version-specific data.
+    pub fn migrate_to(self, version: Version) -> Result<CharacterCard, Error> {
+        let Some(spec) = version.name() else {
+            return Err(Error::UnsupportedVersion(version));
+        };
+
+        let mut nested = self.to_nested();
+
+        if version < Version::V2 {
+            return Ok(Self::Flat(nested.data.v1));
+        }
+
+        nested.override_v2(version >= Version::V2);
+        nested.override_v3(version >= Version::V3);
+
+        nested.spec = spec.to_owned();
+        nested.spec_version = version;
+
+        Ok(Self::Nested(nested))
+    }
 }
 
 /// Represents nested form of character card.
@@ -98,6 +121,38 @@ impl NestedCharacterCard {
         }
 
         Ok(())
+    }
+
+    fn override_v2(&mut self, fill: bool) {
+        if !fill {
+            self.data.v2 = None;
+        } else if self.data.v2.is_none() {
+            self.data.v2 = Some(Default::default());
+        }
+    }
+
+    fn override_v3(&mut self, fill: bool) {
+        if !fill {
+            self.data.v3 = None;
+        } else if self.data.v3.is_none() {
+            self.data.v3 = Some(Default::default());
+        }
+
+        let Some(v2) = self.data.v2.as_mut() else {
+            return;
+        };
+
+        let Some(book) = &mut v2.character_book else {
+            return;
+        };
+
+        for entry in &mut book.entries {
+            if !fill {
+                entry.v3 = None;
+            } else if entry.v3.is_none() {
+                entry.v3 = Some(Default::default());
+            }
+        }
     }
 }
 

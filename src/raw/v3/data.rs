@@ -6,7 +6,7 @@ use serdev::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 /// Represents version-3-specific features of character card data.
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
 #[serde(validate = "Self::validate")]
 pub struct CharacterCardData {
     /// Represents an array of asset.

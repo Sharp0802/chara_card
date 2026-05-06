@@ -3,7 +3,7 @@ use std::ops::Deref;
 use crate::raw::ext::impls::{DepthPrompt, PngExif, RisuAI};
 
 /// Represents an array of application-specific extensions.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct Extensions(Vec<Extension>);
 
 impl Deref for Extensions {
