@@ -1,17 +1,20 @@
 use assert_json_diff::assert_json_eq;
-use chara_card::charx::CharX;
+use chara_card::charx::{CharX, CharXImport};
 use chara_card::raw::CharacterCard;
 use jiff::Timestamp;
 use rstest::rstest;
 use serde_json::Value;
 use std::fs::{read_to_string, File};
+use std::io::BufReader;
 use std::path::PathBuf;
 use url::Url;
 
 #[rstest]
 fn parse_charx(#[files("tests/samples/charx/*.charx")] path: PathBuf) {
     let file = File::open(path).unwrap();
-    let _charx = CharX::from(file).unwrap();
+    let reader = BufReader::new(file);
+    let import = CharXImport::from_reader(reader).unwrap();
+    let _charx: CharX = import.try_into().unwrap();
 }
 
 #[rstest]
