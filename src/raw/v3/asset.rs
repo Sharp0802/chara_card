@@ -30,8 +30,9 @@ pub struct Asset {
     ///
     /// Applications **MAY** support additional schemas such as `file://`, `http(s)://`, or `ftp://`.
     ///
-    /// > [!CAUTION]
-    /// > **Security Risk**: Implementing external schemas
+    /// > **Security Risk**
+    /// >
+    /// > Implementing external schemas
     /// > (e.g., `file://`, `http(s)://`, etc.)
     /// > significantly increases the application's attack surface.
     /// >
