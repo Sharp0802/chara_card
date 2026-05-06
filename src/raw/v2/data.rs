@@ -1,6 +1,5 @@
 use serdev::{Deserialize, Serialize};
-
-use crate::raw::v2::extension::Extensions;
+use crate::raw::ext::Extensions;
 use crate::raw::v2::lorebook::Lorebook;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

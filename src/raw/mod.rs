@@ -2,6 +2,7 @@ pub mod cbs;
 mod content;
 pub mod decorator;
 mod error;
+pub mod ext;
 mod resolve;
 mod shm;
 pub mod v1;

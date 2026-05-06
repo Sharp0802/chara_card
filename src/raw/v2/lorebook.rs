@@ -1,4 +1,4 @@
-use crate::raw::v2::extension::Extensions;
+use crate::raw::ext::Extensions;
 use crate::raw::{shm, Content};
 use serdev::{Deserialize, Serialize};
 
