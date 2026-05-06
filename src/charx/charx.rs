@@ -26,7 +26,7 @@ impl<T: Read + Seek> TryFrom<CharXImport<T>> for CharX {
             .map(|v| v.assets.as_slice())
             .unwrap_or_default()
         {
-            let source: Source = raw.uri.clone().into();
+            let source: Source = (&raw.uri).into();
             let asset = Asset::try_from(source, &raw.ext, &mut value.archive)?;
 
             assets

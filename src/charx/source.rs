@@ -9,8 +9,8 @@ pub enum Source {
     Misc(Url),
 }
 
-impl From<Url> for Source {
-    fn from(mut url: Url) -> Self {
+impl From<&Url> for Source {
+    fn from(url: &Url) -> Self {
         match url.scheme() {
             "ccdefault" => return Self::CCDefault,
 
@@ -36,7 +36,7 @@ impl From<Url> for Source {
             _ => {}
         }
 
-        Self::Misc(url)
+        Self::Misc(url.to_owned())
     }
 }
 
@@ -78,7 +78,7 @@ mod tests {
     fn isomorphic_test(#[case] url: &str) {
         let url: Url = url.parse().unwrap();
 
-        let source: Source = url.clone().into();
+        let source: Source = (&url).into();
         let source_url: Url = source.into();
 
         assert_eq!(url, source_url);

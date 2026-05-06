@@ -8,15 +8,15 @@ use zip::ZipArchive;
 
 #[derive(Debug, Clone)]
 pub struct Data {
-    data: Cow<'static, [u8]>,
-    mime: &'static str,
+    pub bytes: Cow<'static, [u8]>,
+    pub mime: &'static str,
 }
 
 impl Data {
     pub fn new(data: Cow<'static, [u8]>, ext: &str) -> Self {
         if let Some(inferred) = infer::get(&data) {
             return Self {
-                data,
+                bytes: data,
                 mime: inferred.mime_type(),
             };
         }
@@ -25,7 +25,7 @@ impl Data {
             .first_raw()
             .unwrap_or("application/octet-stream");
 
-        Self { data, mime }
+        Self { bytes: data, mime }
     }
 }
 
@@ -33,20 +33,20 @@ impl Deref for Data {
     type Target = [u8];
 
     fn deref(&self) -> &Self::Target {
-        self.data.as_ref()
+        self.bytes.as_ref()
     }
 }
 
 impl AsRef<[u8]> for Data {
     fn as_ref(&self) -> &[u8] {
-        self.data.as_ref()
+        self.bytes.as_ref()
     }
 }
 
 #[derive(Debug, Clone)]
 pub struct Asset {
-    data: Option<Data>,
-    source: Source,
+    pub data: Option<Data>,
+    pub source: Source,
 }
 
 impl Asset {
