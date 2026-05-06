@@ -1,6 +1,6 @@
 [package]
 name = "chara_card"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2024"
 
 description = "A library to deal with character card formats and `.charx` in Rust."
