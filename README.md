@@ -58,7 +58,8 @@ fn parse_card_json(card_json: &str) {
 
 **Extract from `.charx`**:
 
-> [!WARNING]
+> **Warning**
+> 
 > Currently, `charx` module is unstable and API may be changed in future.
 
 ```rust
