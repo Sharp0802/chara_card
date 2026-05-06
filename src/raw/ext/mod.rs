@@ -1,3 +1,5 @@
+//! Provides low-level access for extensions.
+
 mod defs;
 mod macros;
 

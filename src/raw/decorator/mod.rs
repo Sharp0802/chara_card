@@ -1,3 +1,5 @@
+//! Provides low-level access for decorators.
+
 mod defs;
 mod display;
 mod error;

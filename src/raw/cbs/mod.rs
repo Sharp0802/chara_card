@@ -1,3 +1,5 @@
+//! Provides low-level access for curly-braced-syntaxes (CBS).
+
 mod display;
 mod node;
 mod parse;

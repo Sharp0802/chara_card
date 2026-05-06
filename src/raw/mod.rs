@@ -1,3 +1,5 @@
+//! Provides low-level access on character card format.
+
 pub mod cbs;
 mod content;
 pub mod decorator;
