@@ -168,8 +168,8 @@ impl From<CharacterCard> for NestedCharacterCard {
             spec_version: Version::V1,
             data: CharacterCardData {
                 v1,
-                v2: None.into(),
-                v3: None.into(),
+                v2: None,
+                v3: None,
             },
         }
     }

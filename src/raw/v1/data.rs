@@ -24,6 +24,7 @@ pub struct CharacterCardData {
 }
 
 pub mod examples {
+    use std::borrow::Cow;
     use super::*;
 
     pub fn serialize<S>(value: &Vec<String>, serializer: S) -> Result<S::Ok, S::Error>
@@ -42,7 +43,7 @@ pub mod examples {
     where
         D: Deserializer<'de>,
     {
-        let raw = <&str>::deserialize(deserializer)?;
+        let raw = Cow::<'static, str>::deserialize(deserializer)?;
 
         let vec: Vec<_> = raw
             .split("<START>\n")

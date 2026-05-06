@@ -4,6 +4,7 @@ macro_rules! extensions {
         use serdev::de::{MapAccess, Visitor};
         use serdev::{Deserialize, Deserializer, Serialize, Serializer};
         use serdev::ser::SerializeMap;
+        use std::borrow::Cow;
         use std::fmt::Formatter;
 
         impl Serialize for Extensions {
@@ -43,10 +44,10 @@ macro_rules! extensions {
             {
                 let mut extensions = vec![];
 
-                while let Some(key) = map.next_key::<&str>()? {
-                    let value = match key {
+                while let Some(key) = map.next_key::<Cow<'static, str>>()? {
+                    let value = match key.as_ref() {
                         $(stringify!($name) => paste::paste! { Extension::[< $name:camel >](map.next_value()?) } ,)+
-                        _ => Extension::Unknown(key.to_owned(), map.next_value()?),
+                        _ => Extension::Unknown(key.to_string(), map.next_value()?),
                     };
 
                     extensions.push(value);
