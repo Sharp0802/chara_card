@@ -18,21 +18,21 @@ the **same format everywhere with same behaviour**.
 **(De)serialization/Validation**:
 
 - [x] Full Standard Compliance
-  - [Character Card v1/v2 spec.](https://github.com/malfoyslastname/character-card-spec-v2)
-  - [Character Card v3 spec.](https://github.com/kwaroran/character-card-spec-v3)
+    - [Character Card v1/v2 spec.](https://github.com/malfoyslastname/character-card-spec-v2)
+    - [Character Card v3 spec.](https://github.com/kwaroran/character-card-spec-v3)
 - [x] Content parsing
-  - [x] Decorator parser
-  - [x] Curly Braced Syntaxes (CBS) parser
+    - [x] Decorator parser
+    - [x] Curly Braced Syntaxes (CBS) parser
 - [x] Non-standard field compatibility
-  - [x] RisuAI (*testing...*)
+    - [x] RisuAI (*testing...*)
 
 **Evaluation**:
 
 - [ ] Content evaluation
-  - [ ] Decorator evaluator
-  - [ ] CBS evaluator
+    - [ ] Decorator evaluator
+    - [ ] CBS evaluator
 - [ ] Non-standard extension compatibility
-  - [ ] RisuAI
+    - [ ] RisuAI
 
 **Packaging**:
 
@@ -51,7 +51,7 @@ use chara_card::raw::CharacterCard;
 fn parse_card_json(card_json: &str) {
     // Parse character card from JSON string
     let parsed: CharacterCard = serde_json::from_str(card_json).unwrap();
-    
+
     println!("{:#?}", parsed);
 }
 ```
@@ -70,6 +70,19 @@ fn parse_charx(bytes: &[u8]) {
     let _charx = CharX::from(reader).unwrap();
 }
 ```
+
+## Clean-Room Design & Compatibility
+
+This crate aims for high compatibility with various character card implementations
+while maintaining legal and ethical boundaries.
+
+To support non-standard extensions without bound by their specific licenses or internal logic,
+We strictly adhere to **Clean-Room Design** principles:
+
+- No Source Code Inspection : We do not read or reference the source code of other applications.
+- Artefact Analysis : Compatibility is achieved solely by analysing publicly available specifications and
+  program-generated artefact (e.g., exported files).
+- Independent Implementation : All logic is implemented from scratch to ensure compatibility.
 
 ## License
 
